@@ -1,0 +1,6 @@
+*.lock.hcl
+*.tfstate.backup
+*.tfstate
+*/.terraform*
+*credentials*
+*accessKey*
