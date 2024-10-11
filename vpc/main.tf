@@ -6,6 +6,11 @@ terraform {
       version = "5.70.0"
     }
   }
+  backend "s3" {
+    bucket = "remote-state-btenorio"
+    key    = "remote-state"
+    region = "us-west-2"
+  }
 }
 
 provider "aws" {
