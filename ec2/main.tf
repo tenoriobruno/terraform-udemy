@@ -22,3 +22,12 @@ provider "aws" {
     }
   }
 }
+
+data "terraform_remote_state" "remote_data_source_vpc" {
+  backend = "s3"
+  config = {
+    bucket = "remote-state-btenorio"
+    key    = "remote-state-vpc.tfstate"
+    region = "us-west-2"
+  }
+}
