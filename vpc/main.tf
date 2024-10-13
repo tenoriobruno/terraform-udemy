@@ -9,12 +9,12 @@ terraform {
   backend "s3" {
     bucket = "remote-state-btenorio"
     key    = "remote-state-vpc.tfstate"
-    region = "us-west-2"
+    region = "us-east-1"
   }
 }
 
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-1"
   default_tags {
     tags = {
       owner      = "bruno"

@@ -12,6 +12,7 @@ resource "aws_instance" "ec2_instance" {
   subnet_id                   = data.terraform_remote_state.remote_data_source_vpc.outputs.subnet_id
   vpc_security_group_ids      = [data.terraform_remote_state.remote_data_source_vpc.outputs.security_group_id]
   associate_public_ip_address = true
+  user_data = file("./update_ubuntu.sh")
 
   #use provisioner só em último caso. Use user_data para enviar arquivos para a ec2
   provisioner "local-exec" {
