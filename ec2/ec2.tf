@@ -12,6 +12,37 @@ resource "aws_instance" "ec2_instance" {
   subnet_id                   = data.terraform_remote_state.remote_data_source_vpc.outputs.subnet_id
   vpc_security_group_ids      = [data.terraform_remote_state.remote_data_source_vpc.outputs.security_group_id]
   associate_public_ip_address = true
+
+  provisioner "local-exec" {
+    command = "echo ${self.private_ip} >> private_ips.txt"
+  }
+
+  connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    password = file("./aws-ec2-key")
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo subnet_id: ${data.terraform_remote_state.remote_data_source_vpc.outputs.subnet_id} >> ./network_info.txt",
+      "echo security_group_id: ${data.terraform_remote_state.remote_data_source_vpc.outputs.security_group_id} >> ./network_info.txt"
+    ]
+  }
+
+  # Copies the teste.txt file to ~/teste_ec2.txt
+  provisioner "file" {
+    source      = "./teste.txt"
+    destination = "˜/teste_ec2.txt"
+  }
+
+  # Copies the string in content into ~/ami.txt
+  provisioner "file" {
+    content     = "ami used: ${self.ami}"
+    destination = "~/ami.txt"
+  }
+
   tags = {
     Name = "ec2-instance-terraform"
   }
