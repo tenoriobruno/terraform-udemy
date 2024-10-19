@@ -3,6 +3,7 @@ resource "aws_s3_bucket" "remote_state_btenorio" {
 
   tags = {
     Name = "remote-state-btenorio-name"
+    new_tag = "manual tag"
   }
 }
 
