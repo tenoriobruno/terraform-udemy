@@ -5,3 +5,4 @@
 *accessKey*
 *.tfplan
 *.out
+*.DS_Store
