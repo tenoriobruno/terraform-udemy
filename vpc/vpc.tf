@@ -9,7 +9,7 @@ resource "aws_vpc" "vpc" {
 resource "aws_subnet" "subnet" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.0.1.0/24"
-  availability_zone = "us-west-2a"# por default estava a 2d. Estava dando no apply do ec2, pois a 2d n estava disponível
+  availability_zone = "us-east-1a"# por default estava a 2d. Estava dando no apply do ec2, pois a 2d n estava disponível
 
   tags = {
     Name = "subnet-terraform"
