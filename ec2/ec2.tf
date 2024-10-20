@@ -6,13 +6,13 @@ resource "aws_key_pair" "ec2_pub_key" {
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami                         = "ami-04dd23e62ed049936" #AMI é por região
+  ami                         = "ami-0866a3c8686eaeeba" #AMI é por região
   instance_type               = "t2.micro"
   key_name                    = aws_key_pair.ec2_pub_key.key_name
   subnet_id                   = data.terraform_remote_state.remote_data_source_vpc.outputs.subnet_id
   vpc_security_group_ids      = [data.terraform_remote_state.remote_data_source_vpc.outputs.security_group_id]
   associate_public_ip_address = true
-  user_data = file("./update_ubuntu.sh")
+  user_data                   = file("./update_ubuntu.sh")
 
   #use provisioner só em último caso. Use user_data para enviar arquivos para a ec2
   provisioner "local-exec" {
@@ -26,17 +26,26 @@ resource "aws_instance" "ec2_instance" {
     host     = self.public_ip
   }
 
+  /*
   provisioner "remote-exec" {
     inline = [
       "echo subnet_id: ${data.terraform_remote_state.remote_data_source_vpc.outputs.subnet_id} >> ./network_info.txt",
       "echo security_group_id: ${data.terraform_remote_state.remote_data_source_vpc.outputs.security_group_id} >> ./network_info.txt"
     ]
   }
-
+ Error: remote-exec provisioner error
+│ 
+│   with aws_instance.ec2_instance,
+│   on ec2.tf line 29, in resource "aws_instance" "ec2_instance":
+│   29:   provisioner "remote-exec" {
+│ 
+│ timeout - last error: SSH authentication failed (ubuntu@3.87.221.35:22): ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey], no supported methods remain
+*/
+  /*
   # Copies the teste.txt file to ~/teste_ec2.txt
   provisioner "file" {
     source      = "./teste.txt"
-    destination = "˜/teste_ec2.txt"
+    destination = "~/teste_ec2.txt"
   }
 
   # Copies the string in content into ~/ami.txt
@@ -44,6 +53,14 @@ resource "aws_instance" "ec2_instance" {
     content     = "ami used: ${self.ami}"
     destination = "~/ami.txt"
   }
+│ Error: file provisioner error
+│ 
+│   with aws_instance.ec2_instance,
+│   on ec2.tf line 45, in resource "aws_instance" "ec2_instance":
+│   45:   provisioner "file" {
+│ 
+│ timeout - last error: SSH authentication failed (ubuntu@98.82.16.175:22): ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey], no supported methods remain
+  */
 
   tags = {
     Name = "ec2-instance-terraform"

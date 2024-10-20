@@ -28,6 +28,6 @@ data "terraform_remote_state" "remote_data_source_vpc" {
   config = {
     bucket = "remote-state-btenorio"
     key    = "remote-state-vpc.tfstate"
-    region = "us-west-2"
+    region = "us-east-1"
   }
 }
