@@ -8,7 +8,7 @@ terraform {
   }
     backend "s3" {
     bucket = "remote-state-btenorio"
-    key    = "remote-state-vpc.tfstate"
+    key    = "remote-state-s3.tfstate"
     region = "us-east-1"
   }
 }
