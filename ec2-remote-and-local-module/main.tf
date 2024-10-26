@@ -23,14 +23,14 @@ provider "aws" {
   }
 }
 
-module "ec2" {
+module "vpc-local" {
   source      = "./vpc-module"
   cidr_vpc    = "10.0.0.0/16"
   cidr_subnet = var.cidr_subnet
   env         = var.env
 }
 
-module "ec2-remote" {
+module "vpc-remote" {
   source      = "github.com/tenoriobruno/terraform-udemy//ec2-local-module/vpc-module"
   cidr_vpc    = "172.31.0.0/16"
   cidr_subnet = var.cidr_subnet_vpc_remote
