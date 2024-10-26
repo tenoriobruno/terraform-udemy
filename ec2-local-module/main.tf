@@ -29,3 +29,10 @@ module "ec2" {
   cidr_subnet = var.cidr_subnet
   env         = var.env
 }
+
+module "ec2-remote" {
+  source = "github.com/tenoriobruno/terraform-udemy//modules/vpc-module"
+  cidr_vpc    = "172.31.0.0/16"
+  cidr_subnet = var.cidr_subnet
+  env         = var.env
+}
