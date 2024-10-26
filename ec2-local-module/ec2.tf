@@ -9,8 +9,8 @@ resource "aws_instance" "ec2_instance" {
   ami                         = "ami-0866a3c8686eaeeba" #AMI é por região
   instance_type               = "t2.micro"
   key_name                    = aws_key_pair.ec2_pub_key.key_name
-  subnet_id                   = module.ec2.subnet_id
-  vpc_security_group_ids      = [module.ec2.security_group_id]
+  subnet_id                   = module.ec2-remote.subnet_id
+  vpc_security_group_ids      = [module.ec2-remote.security_group_id]
   associate_public_ip_address = true
   user_data                   = file("./update_ubuntu.sh")
 
