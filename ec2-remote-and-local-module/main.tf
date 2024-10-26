@@ -31,7 +31,7 @@ module "vpc-local" {
 }
 
 module "vpc-remote" {
-  source      = "github.com/tenoriobruno/terraform-udemy//ec2-local-module/vpc-module"
+  source      = "github.com/tenoriobruno/terraform-udemy//ec2-remote-and-local-module/vpc-module"
   cidr_vpc    = "172.31.0.0/16"
   cidr_subnet = var.cidr_subnet_vpc_remote
   env         = var.env
